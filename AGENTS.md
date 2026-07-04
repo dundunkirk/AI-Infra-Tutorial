@@ -9,9 +9,9 @@ Personal LLM study notes (Chinese). The site is built with VitePress and is mean
 - `uv run jupyter lab` — run notebooks (Python 3.14, managed by uv)
 - `npm install` — install VitePress and Markdown/notebook rendering dependencies
 - `npm run content:sync` — scan note folders, create missing notebook wrapper pages, and regenerate sidebar/notebook manifests
-- `npm run docs:dev` — run `content:sync`, then start the VitePress dev server
-- `npm run docs:build` — run `content:sync`, then build the site (output: `.vitepress/dist/`)
-- `npm run docs:preview` — preview built docs locally
+- `npm run dev` — run `content:sync`, then start the VitePress dev server
+- `npm run build` — run `content:sync`, then build the site (output: `.vitepress/dist/`)
+- `npm run preview` — preview built docs locally
 
 ## Content Workflow
 

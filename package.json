@@ -5,9 +5,12 @@
   "type": "module",
   "scripts": {
     "content:sync": "node scripts/sync-content.mjs",
-    "docs:dev": "npm run content:sync && vitepress dev .",
-    "docs:build": "npm run content:sync && vitepress build .",
-    "docs:preview": "vitepress preview ."
+    "dev": "npm run content:sync && vitepress dev .",
+    "build": "npm run content:sync && vitepress build .",
+    "preview": "vitepress preview .",
+    "docs:dev": "npm run dev",
+    "docs:build": "npm run build",
+    "docs:preview": "npm run preview"
   },
   "devDependencies": {
     "katex": "^0.17.0",
