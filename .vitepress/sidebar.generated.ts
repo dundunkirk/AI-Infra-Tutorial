@@ -15,15 +15,15 @@ export const generatedSidebar = [
       },
       {
         text: "Gradient Descent Details Visualization",
-        link: "/basis/grad-descent-details-visualization"
+        link: "/basis/_notebooks/grad-descent-details-visualization"
       },
       {
         text: "PyTorch MLE for Bernoulli",
-        link: "/basis/pytorch-mle-for-bernoulli"
+        link: "/basis/_notebooks/pytorch-mle-for-bernoulli"
       },
       {
         text: "Derivative Partial Directional",
-        link: "/basis/derivative-partial-directional"
+        link: "/basis/_notebooks/derivative-partial-directional"
       }
     ]
   },
@@ -33,7 +33,7 @@ export const generatedSidebar = [
     items: [
       {
         text: "Convex Function Jensen Inequality",
-        link: "/math/convex-function-jensen-inequality"
+        link: "/math/_notebooks/convex-function-jensen-inequality"
       },
       {
         text: "Matrix",
@@ -41,15 +41,15 @@ export const generatedSidebar = [
         items: [
           {
             text: "Lp Norm Matrix Norm",
-            link: "/math/matrix/lp-norm-matrix-norm"
+            link: "/math/matrix/_notebooks/lp-norm-matrix-norm"
           },
           {
             text: "Spectral Norm",
-            link: "/math/matrix/spectral-norm"
+            link: "/math/matrix/_notebooks/spectral-norm"
           },
           {
             text: "Rotation Matrix",
-            link: "/math/matrix/rotation-matrix"
+            link: "/math/matrix/_notebooks/rotation-matrix"
           }
         ]
       },
@@ -59,15 +59,15 @@ export const generatedSidebar = [
         items: [
           {
             text: "Forward Reverse KL Div",
-            link: "/math/prob_stats/forward-reverse-kl-div"
+            link: "/math/prob_stats/_notebooks/forward-reverse-kl-div"
           },
           {
             text: "KL Div Basics",
-            link: "/math/prob_stats/kl-div-basics"
+            link: "/math/prob_stats/_notebooks/kl-div-basics"
           },
           {
             text: "PyTorch KL Div Examples",
-            link: "/math/prob_stats/pytorch-kl-div-examples"
+            link: "/math/prob_stats/_notebooks/pytorch-kl-div-examples"
           }
         ]
       }
@@ -113,23 +113,23 @@ export const generatedSidebar = [
       },
       {
         text: "LR Scheduler",
-        link: "/optimizer/lr-scheduler"
+        link: "/optimizer/_notebooks/lr-scheduler"
       },
       {
         text: "AdaGrad RMSProp",
-        link: "/optimizer/adagrad-rmsprop"
+        link: "/optimizer/_notebooks/adagrad-rmsprop"
       },
       {
         text: "AdaDelta Adam",
-        link: "/optimizer/adadelta-adam"
+        link: "/optimizer/_notebooks/adadelta-adam"
       },
       {
         text: "L2, Weight Decay, AdamW",
-        link: "/optimizer/l2-reg-weight-decay-adamw"
+        link: "/optimizer/_notebooks/l2-reg-weight-decay-adamw"
       },
       {
         text: "PyTorch as General Optimizer",
-        link: "/optimizer/pytorch-as-general-optimizer"
+        link: "/optimizer/_notebooks/pytorch-as-general-optimizer"
       }
     ]
   }

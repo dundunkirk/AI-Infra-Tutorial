@@ -1,9 +1,10 @@
-import { mkdir, readdir, readFile, writeFile } from 'node:fs/promises'
+import { mkdir, readdir, readFile, unlink, writeFile } from 'node:fs/promises'
 import path from 'node:path'
 
 const root = process.cwd()
 const generatedSidebarPath = path.join(root, '.vitepress', 'sidebar.generated.ts')
 const generatedNotebooksPath = path.join(root, '.vitepress', 'notebooks.generated.ts')
+const generatedNotebookDir = '_notebooks'
 const preferredRootOrder = ['basis', 'math', 'roadmap', 'optimizer']
 const ignoredTopLevelDirs = new Set([
   '.agents',
@@ -53,7 +54,7 @@ const preferredOrder = [
   'optimizer/pytorch-as-general-optimizer.md',
 ]
 
-const notebookPageOverrides = {
+const notebookPlacementOverrides = {
   'basis/01_grad_descent_details_visualization.ipynb': 'basis/grad-descent-details-visualization.md',
   'basis/02_pytorch_mle_for_bernoulli.ipynb': 'basis/pytorch-mle-for-bernoulli.md',
   'optimizer/l2_reg_weight_decay_adaw.ipynb': 'optimizer/l2-reg-weight-decay-adamw.md',
@@ -156,10 +157,22 @@ async function detectContentRoots() {
   })
 }
 
+function notebookPlacementPath(ipynbRelativePath) {
+  const parsed = path.parse(ipynbRelativePath)
+  const slugName = slugify(parsed.base)
+  return notebookPlacementOverrides[ipynbRelativePath] || toPosix(path.join(parsed.dir, `${slugName}.md`))
+}
+
+function notebookWrapperPath(ipynbRelativePath) {
+  const placementPath = notebookPlacementPath(ipynbRelativePath)
+  const parsed = path.parse(placementPath)
+  return toPosix(path.join(parsed.dir, generatedNotebookDir, parsed.base))
+}
+
 async function ensureNotebookPage(ipynbRelativePath) {
   const parsed = path.parse(ipynbRelativePath)
   const slugName = slugify(parsed.base)
-  let pageRelativePath = notebookPageOverrides[ipynbRelativePath] || toPosix(path.join(parsed.dir, `${slugName}.md`))
+  let pageRelativePath = notebookWrapperPath(ipynbRelativePath)
   let pageFullPath = path.join(root, pageRelativePath)
   const content = `${generatedNotebookMarker}\n<NotebookViewer path="/${ipynbRelativePath}" />\n`
 
@@ -174,7 +187,7 @@ async function ensureNotebookPage(ipynbRelativePath) {
 
   const isGeneratedPage = existing.includes(generatedNotebookMarker) || existing.trim().startsWith('<NotebookViewer')
   if (existing && existing !== content && !isGeneratedPage) {
-    pageRelativePath = toPosix(path.join(parsed.dir, `${slugName}-notebook.md`))
+    pageRelativePath = toPosix(path.join(parsed.dir, generatedNotebookDir, `${slugName}-notebook.md`))
     pageFullPath = path.join(root, pageRelativePath)
     existing = ''
     try {
@@ -191,6 +204,22 @@ async function ensureNotebookPage(ipynbRelativePath) {
   return pageRelativePath
 }
 
+async function removeStaleNotebookPages(contentRoots, expectedPages) {
+  for (const contentRoot of contentRoots) {
+    const files = await walk(path.join(root, contentRoot))
+
+    for (const fullPath of files) {
+      if (!fullPath.endsWith('.md')) continue
+      const relativePath = toPosix(path.relative(root, fullPath))
+      const content = await readFile(fullPath, 'utf8')
+
+      if (content.includes(generatedNotebookMarker) && !expectedPages.has(relativePath)) {
+        await unlink(fullPath)
+      }
+    }
+  }
+}
+
 function createTreeNode(name, segmentPath = '') {
   return {
     name,
@@ -200,9 +229,9 @@ function createTreeNode(name, segmentPath = '') {
   }
 }
 
-function addPage(tree, relativePath, title) {
+function addPage(tree, relativePath, title, linkRelativePath = relativePath) {
   const parts = relativePath.split('/')
-  const fileName = parts.pop()
+  parts.pop()
   let node = tree
 
   parts.forEach((part, index) => {
@@ -216,7 +245,7 @@ function addPage(tree, relativePath, title) {
 
   node.pages.push({
     text: title,
-    link: relativePath.endsWith('/index.md') ? `/${relativePath.replace(/\/index\.md$/i, '/')}` : `/${relativePath.replace(/\.md$/i, '')}`,
+    link: linkRelativePath.endsWith('/index.md') ? `/${linkRelativePath.replace(/\/index\.md$/i, '/')}` : `/${linkRelativePath.replace(/\.md$/i, '')}`,
     relativePath,
   })
 }
@@ -276,6 +305,7 @@ async function main() {
   const tree = createTreeNode('root')
   const contentRoots = await detectContentRoots()
   const notebookPaths = []
+  const expectedNotebookPages = new Set()
 
   for (const contentRoot of contentRoots) {
     const fullRoot = path.join(root, contentRoot)
@@ -287,7 +317,13 @@ async function main() {
       if (relativePath.endsWith('.ipynb')) {
         notebookPaths.push(relativePath)
         const pagePath = await ensureNotebookPage(relativePath)
-        addPage(tree, pagePath, notebookTitleOverrides[relativePath] || titleFromSlug(path.basename(relativePath)))
+        expectedNotebookPages.add(pagePath)
+        addPage(
+          tree,
+          notebookPlacementPath(relativePath),
+          notebookTitleOverrides[relativePath] || titleFromSlug(path.basename(relativePath)),
+          pagePath,
+        )
         continue
       }
 
@@ -299,6 +335,8 @@ async function main() {
       addPage(tree, relativePath, titleFromMarkdown(content, titleFromSlug(path.basename(relativePath))))
     }
   }
+
+  await removeStaleNotebookPages(contentRoots, expectedNotebookPages)
 
   const sidebar = contentRoots
     .map((contentRoot) => tree.children.get(contentRoot))

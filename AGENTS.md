@@ -15,7 +15,7 @@ Personal LLM study notes (Chinese). The site is built with VitePress and is mean
 
 ## Content Workflow
 
-Write notes directly in topic folders such as `basis/`, `math/`, `optimizer/`, and `roadmap/`. Any non-hidden top-level folder that contains `.md` or `.ipynb` files is treated as content. Markdown files are rendered as normal VitePress pages. Jupyter notebooks are detected automatically; `scripts/sync-content.mjs` creates a small generated `.md` wrapper next to each `.ipynb`, then the Vue `NotebookViewer` component renders notebook markdown, code cells, outputs, images, and KaTeX math in the browser.
+Write notes directly in topic folders such as `basis/`, `math/`, `optimizer/`, and `roadmap/`. Any non-hidden top-level folder that contains `.md` or `.ipynb` files is treated as content. Markdown files are rendered as normal VitePress pages. Jupyter notebooks are detected automatically; `scripts/sync-content.mjs` creates a small generated `.md` wrapper under the current folder's `_notebooks/` subfolder, then the Vue `NotebookViewer` component renders notebook markdown, code cells, outputs, images, and KaTeX math in the browser.
 
 Do not manually edit `.vitepress/sidebar.generated.ts` or `.vitepress/notebooks.generated.ts`; both are rebuilt by `npm run content:sync`. Do not edit generated notebook wrapper pages unless changing the generator. They start with:
 
@@ -24,6 +24,8 @@ Do not manually edit `.vitepress/sidebar.generated.ts` or `.vitepress/notebooks.
 ```
 
 If a notebook and a hand-written Markdown note would use the same slug, the sync script preserves the hand-written `.md` and creates a `*-notebook.md` page instead.
+
+When a notebook is moved or deleted, `npm run content:sync` removes stale generated wrapper pages that still carry the generated marker. It never deletes normal hand-written Markdown notes.
 
 ## Site Architecture
 
