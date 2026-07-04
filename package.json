@@ -4,12 +4,15 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "docs:dev": "vitepress dev .",
-    "docs:build": "vitepress build .",
+    "content:sync": "node scripts/sync-content.mjs",
+    "docs:dev": "npm run content:sync && vitepress dev .",
+    "docs:build": "npm run content:sync && vitepress build .",
     "docs:preview": "vitepress preview ."
   },
   "devDependencies": {
-    "vitepress": "^1.6.3",
-    "markdown-it-mathjax3": "^4.3.2"
+    "katex": "^0.17.0",
+    "markdown-it": "^14.3.0",
+    "markdown-it-mathjax3": "^4.3.2",
+    "vitepress": "^1.6.3"
   }
 }

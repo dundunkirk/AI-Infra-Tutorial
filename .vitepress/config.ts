@@ -1,5 +1,6 @@
 import { defineConfig } from 'vitepress'
 import mathjax3 from 'markdown-it-mathjax3'
+import { generatedSidebar } from './sidebar.generated'
 
 export default defineConfig({
   base: '/llm-lab/',
@@ -18,35 +19,7 @@ export default defineConfig({
   themeConfig: {
     nav: [],
 
-    sidebar: [
-      {
-        text: 'Basics',
-        collapsed: false,
-        items: [
-          { text: 'Micrograd', link: '/basis/micrograd' },
-          { text: 'XGBoost', link: '/basis/xgboost' },
-        ],
-      },
-      {
-        text: 'Roadmap',
-        collapsed: false,
-        items: [
-          { text: 'Learning Roadmap', link: '/roadmap/roadmap' },
-          { text: '12-Week Plan', link: '/roadmap/study_plan' },
-          { text: 'Resources', link: '/roadmap/llm_link' },
-          { text: 'Modern AI for Beginners', link: '/roadmap/modern_ai_for_beginners' },
-          { text: 'How to Learn LLM', link: '/roadmap/how_to_learn_llm' },
-          { text: 'How to Learn RL', link: '/roadmap/how_to_learn_rl' },
-        ],
-      },
-      {
-        text: 'Topics',
-        collapsed: false,
-        items: [
-          { text: 'Optimizers', link: '/optimizer/' },
-        ],
-      },
-    ],
+    sidebar: generatedSidebar,
 
     socialLinks: [
       { icon: 'github', link: 'https://github.com/dundunkirk/llm-lab' },
