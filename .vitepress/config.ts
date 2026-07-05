@@ -25,6 +25,13 @@ export default defineConfig({
     sidebar: generatedSidebar,
 
     socialLinks: [
+      {
+        icon: {
+          svg: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3c2.5 2.6 3.8 5.8 3.8 9s-1.3 6.4-3.8 9c-2.5-2.6-3.8-5.8-3.8-9s1.3-6.4 3.8-9z"/></svg>',
+        },
+        link: 'https://zeztzchen.github.io/daily-llm-board/',
+        ariaLabel: 'Daily LLM Board',
+      },
       { icon: 'github', link: 'https://github.com/dundunkirk/llm-lab' },
     ],
 
