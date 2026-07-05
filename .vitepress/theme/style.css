@@ -25,7 +25,11 @@
   --vp-home-hero-name-background: linear-gradient(120deg, #111827 0%, #374151 100%);
   --vp-home-hero-image-background-image: none;
   --vp-home-hero-image-filter: blur(44px);
-  --vp-font-family-base: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --lab-font-sans: Inter, "Noto Sans SC", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --lab-font-heading: Inter, "Noto Sans SC", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --lab-font-mono: "JetBrains Mono", "Cascadia Code", "SFMono-Regular", "SF Mono", Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+  --vp-font-family-base: var(--lab-font-sans);
+  --vp-font-family-mono: var(--lab-font-mono);
 }
 
 .dark {
@@ -60,6 +64,11 @@ body {
     linear-gradient(90deg, rgba(29, 78, 216, 0.028) 1px, transparent 1px),
     linear-gradient(180deg, #fbfcff 0%, #f4f7fb 100%);
   background-size: 32px 32px, 32px 32px, auto;
+  font-family: var(--lab-font-sans);
+  font-kerning: normal;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 .dark body {
@@ -83,22 +92,26 @@ body {
 
 .VPNavBarTitle .title {
   gap: 12px;
+  font-family: var(--lab-font-heading);
   font-size: 18px;
   font-weight: 850;
   letter-spacing: -0.02em;
 }
 
 .VPNavBarTitle .title::before {
-  display: inline-grid;
+  display: inline-block;
   width: 30px;
   height: 30px;
-  place-items: center;
   border: 1px solid #111827;
   border-radius: 6px;
-  background: #ffffff;
+  background:
+    linear-gradient(90deg, #1d4ed8 0 5px, transparent 5px),
+    linear-gradient(#1d4ed8, #1d4ed8) 12px 10px / 10px 2px no-repeat,
+    linear-gradient(rgba(29, 78, 216, 0.48), rgba(29, 78, 216, 0.48)) 12px 17px / 8px 2px no-repeat,
+    #ffffff;
   color: #111827;
-  content: "L";
-  font-weight: 800;
+  content: "";
+  box-shadow: inset 0 0 0 4px rgba(29, 78, 216, 0.06);
 }
 
 .VPNavBarSearch {
@@ -319,7 +332,7 @@ body {
 .lab-kicker {
   margin: 0 0 20px;
   color: var(--vp-c-text-3);
-  font-family: ui-monospace, SFMono-Regular, "SF Mono", Consolas, "Liberation Mono", monospace;
+  font-family: var(--lab-font-mono);
   font-size: 12px;
   font-weight: 700;
   letter-spacing: 0.08em;
@@ -503,7 +516,7 @@ body {
 .lab-card span {
   display: block;
   color: var(--vp-c-text-3);
-  font-family: ui-monospace, SFMono-Regular, "SF Mono", Consolas, "Liberation Mono", monospace;
+  font-family: var(--lab-font-mono);
   font-size: 12px;
   font-weight: 700;
   text-transform: uppercase;
@@ -544,7 +557,7 @@ body {
 .notebook-eyebrow {
   margin: 0;
   color: var(--vp-c-text-3);
-  font-family: ui-monospace, SFMono-Regular, "SF Mono", Consolas, "Liberation Mono", monospace;
+  font-family: var(--lab-font-mono);
   font-size: 12px;
   font-weight: 750;
   letter-spacing: 0.08em;
@@ -573,7 +586,7 @@ body {
   background: var(--vp-c-bg);
   padding: 4px 9px;
   color: var(--vp-c-text-3);
-  font-family: ui-monospace, SFMono-Regular, "SF Mono", Consolas, "Liberation Mono", monospace;
+  font-family: var(--lab-font-mono);
   font-size: 12px;
 }
 
@@ -657,7 +670,7 @@ body {
   overflow-x: auto;
   padding: 14px 16px;
   color: var(--vp-c-text-1);
-  font-family: ui-monospace, SFMono-Regular, "SF Mono", Consolas, "Liberation Mono", monospace;
+  font-family: var(--lab-font-mono);
   font-size: 14px;
   line-height: 1.8;
   white-space: pre-wrap;
@@ -680,7 +693,7 @@ body {
   background: linear-gradient(180deg, #ffffff 0%, var(--vp-c-bg-alt) 100%);
   padding: 8px 12px;
   color: var(--vp-c-text-3);
-  font-family: ui-monospace, SFMono-Regular, "SF Mono", Consolas, "Liberation Mono", monospace;
+  font-family: var(--lab-font-mono);
   font-size: 12px;
   font-weight: 700;
 }
@@ -697,7 +710,7 @@ body {
   border-right: 1px solid var(--vp-c-divider);
   padding: 14px 10px;
   color: #94a3b8;
-  font-family: ui-monospace, SFMono-Regular, "SF Mono", Consolas, "Liberation Mono", monospace;
+  font-family: var(--lab-font-mono);
   font-size: 12px;
   text-align: right;
   white-space: nowrap;
@@ -709,7 +722,7 @@ body {
   margin: 0;
   overflow-x: auto;
   padding: 14px 16px;
-  font-family: ui-monospace, SFMono-Regular, "SF Mono", Consolas, "Liberation Mono", monospace;
+  font-family: var(--lab-font-mono);
   font-size: 13px;
   line-height: 1.7;
 }
@@ -749,7 +762,7 @@ body {
 
 .notebook-output-label {
   color: var(--vp-c-text-3);
-  font-family: ui-monospace, SFMono-Regular, "SF Mono", Consolas, "Liberation Mono", monospace;
+  font-family: var(--lab-font-mono);
   font-size: 11px;
   font-weight: 750;
   letter-spacing: 0.06em;
@@ -810,7 +823,11 @@ body {
 
 .VPNavBarTitle .title::before {
   border-color: var(--vp-c-brand-1);
-  background: #eef4ff;
+  background:
+    linear-gradient(90deg, #1d4ed8 0 5px, transparent 5px),
+    linear-gradient(#1d4ed8, #1d4ed8) 12px 10px / 10px 2px no-repeat,
+    linear-gradient(rgba(29, 78, 216, 0.48), rgba(29, 78, 216, 0.48)) 12px 17px / 8px 2px no-repeat,
+    #eef4ff;
   color: var(--vp-c-brand-1);
 }
 
@@ -834,10 +851,40 @@ body {
   text-overflow: ellipsis;
 }
 
+.VPSidebarItem > .item > .link > .text,
+.VPSidebarItem > .item > .text {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.VPSidebarItem:has(> .items) > .item > .text::before,
+.VPSidebarItem:has(> .items) > .item > .link > .text::before {
+  flex: 0 0 auto;
+  width: 13px;
+  height: 5px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, rgba(29, 78, 216, 0.72), rgba(29, 78, 216, 0.18));
+  opacity: 0.9;
+  content: "";
+}
+
+.VPSidebarItem:has(> .items) > .items {
+  border-left: 1px solid rgba(29, 78, 216, 0.18);
+  margin-left: 14px;
+  margin-top: 8px;
+  padding-left: 16px;
+}
+
 .VPSidebarItem.level-0 {
-  border-bottom: 1px solid rgba(16, 24, 40, 0.08);
+  border-bottom: 0;
   margin-bottom: 18px;
-  padding-bottom: 16px;
+  padding-bottom: 0;
+}
+
+.VPSidebarItem.level-0 + .VPSidebarItem.level-0 {
+  border-top: 1px solid rgba(16, 24, 40, 0.08);
+  padding-top: 16px;
 }
 
 .VPSidebarItem.level-0 > .item > .link > .text,
@@ -849,29 +896,43 @@ body {
   text-transform: uppercase;
 }
 
+.VPSidebarItem.level-0 > .item > .link > .text::before,
+.VPSidebarItem.level-0 > .item > .text::before {
+  width: 16px;
+  height: 5px;
+  background: linear-gradient(90deg, #1d4ed8, rgba(29, 78, 216, 0.18));
+}
+
 .VPSidebarItem.level-1 > .items {
   border-left-color: rgba(29, 78, 216, 0.2);
-  margin-left: 14px;
+  margin-left: 16px;
   margin-top: 6px;
-  padding-left: 14px;
+  padding-left: 16px;
 }
 
 .VPSidebarItem.level-1 > .item {
   margin-top: 4px;
 }
 
-.VPSidebarItem.level-1 > .item > .text,
-.VPSidebarItem.level-1 > .item > .link > .text {
+.VPSidebarItem.level-1:has(> .items) > .item > .text,
+.VPSidebarItem.level-1:has(> .items) > .item > .link > .text {
   color: #344054;
   font-size: 14px;
   font-weight: 720;
+}
+
+.VPSidebarItem.level-1:not(:has(> .items)) > .item > .text,
+.VPSidebarItem.level-1:not(:has(> .items)) > .item > .link > .text {
+  color: #4b5f7a;
+  font-size: 14px;
+  font-weight: 400;
 }
 
 .VPSidebarItem.level-2 > .item > .text,
 .VPSidebarItem.level-2 > .item > .link > .text {
   color: #5b6b82;
   font-size: 13.5px;
-  font-weight: 520;
+  font-weight: 400;
 }
 
 .VPSidebarItem.level-1:has(> .items) > .item {
@@ -902,6 +963,7 @@ body {
 
 .VPSidebarItem.is-active > .item .text {
   color: #174ea6;
+  font-weight: inherit;
 }
 
 .VPDoc.has-sidebar .container {
@@ -931,6 +993,7 @@ body {
 
 .vp-doc {
   color: var(--vp-c-text-1);
+  font-family: var(--lab-font-sans);
   font-size: 17px;
   line-height: 1.88;
 }
@@ -939,7 +1002,9 @@ body {
   border-bottom: 1px solid var(--vp-c-divider);
   margin-bottom: 28px;
   padding-bottom: 18px;
+  font-family: var(--lab-font-heading);
   font-size: clamp(36px, 4vw, 52px);
+  font-weight: 850;
   letter-spacing: -0.03em;
 }
 
@@ -947,12 +1012,16 @@ body {
   border-top: 1px solid rgba(16, 24, 40, 0.1);
   margin-top: 50px;
   padding-top: 30px;
+  font-family: var(--lab-font-heading);
   font-size: 27px;
+  font-weight: 780;
 }
 
 .vp-doc h3 {
   margin-top: 32px;
+  font-family: var(--lab-font-heading);
   font-size: 21px;
+  font-weight: 760;
 }
 
 .vp-doc p,
@@ -1026,7 +1095,9 @@ body {
 .lab-hero h1 {
   max-width: 760px;
   padding-left: 18px;
+  font-family: var(--lab-font-heading);
   font-size: clamp(48px, 8vw, 88px);
+  font-weight: 860;
   line-height: 0.96;
 }
 
@@ -1097,8 +1168,11 @@ body {
 
 .notebook-header h1 {
   max-width: 760px;
+  font-family: var(--lab-font-heading);
   font-size: clamp(34px, 4.8vw, 54px);
-  letter-spacing: -0.035em;
+  font-weight: 850;
+  letter-spacing: -0.018em;
+  word-spacing: 0.06em;
 }
 
 .notebook-meta span,
@@ -1118,6 +1192,7 @@ body {
 
 .notebook-markdown {
   color: #344054;
+  font-family: var(--lab-font-sans);
   font-size: 17px;
   line-height: 1.9;
 }
@@ -1126,6 +1201,7 @@ body {
 .notebook-markdown h2,
 .notebook-markdown h3 {
   color: var(--vp-c-text-1);
+  font-family: var(--lab-font-heading);
   letter-spacing: -0.02em;
 }
 
@@ -1198,7 +1274,11 @@ body {
 
 .dark .VPNavBarTitle .title::before {
   border-color: rgba(96, 165, 250, 0.75);
-  background: rgba(96, 165, 250, 0.14);
+  background:
+    linear-gradient(90deg, #60a5fa 0 5px, transparent 5px),
+    linear-gradient(#bfdbfe, #bfdbfe) 12px 10px / 10px 2px no-repeat,
+    linear-gradient(rgba(191, 219, 254, 0.54), rgba(191, 219, 254, 0.54)) 12px 17px / 8px 2px no-repeat,
+    rgba(96, 165, 250, 0.14);
   color: #bfdbfe;
 }
 
@@ -1216,8 +1296,13 @@ body {
   background: #0b1020;
 }
 
-.dark .VPSidebarItem.level-0 {
-  border-bottom-color: rgba(148, 163, 184, 0.16);
+.dark .VPSidebarItem.level-0 + .VPSidebarItem.level-0 {
+  border-top-color: rgba(148, 163, 184, 0.16);
+}
+
+.dark .VPSidebarItem:has(> .items) > .item > .text::before,
+.dark .VPSidebarItem:has(> .items) > .item > .link > .text::before {
+  background: linear-gradient(90deg, rgba(147, 197, 253, 0.86), rgba(96, 165, 250, 0.18));
 }
 
 .dark .VPSidebarItem.level-0 > .item > .link > .text,
@@ -1229,14 +1314,25 @@ body {
   border-left-color: rgba(96, 165, 250, 0.28);
 }
 
-.dark .VPSidebarItem.level-1 > .item > .text,
-.dark .VPSidebarItem.level-1 > .item > .link > .text {
+.dark .VPSidebarItem:has(> .items) > .items {
+  border-left-color: rgba(96, 165, 250, 0.24);
+}
+
+.dark .VPSidebarItem.level-1:has(> .items) > .item > .text,
+.dark .VPSidebarItem.level-1:has(> .items) > .item > .link > .text {
   color: #cbd5e1;
+}
+
+.dark .VPSidebarItem.level-1:not(:has(> .items)) > .item > .text,
+.dark .VPSidebarItem.level-1:not(:has(> .items)) > .item > .link > .text {
+  color: #a8b7cc;
+  font-weight: 400;
 }
 
 .dark .VPSidebarItem.level-2 > .item > .text,
 .dark .VPSidebarItem.level-2 > .item > .link > .text {
   color: #94a3b8;
+  font-weight: 400;
 }
 
 .dark .VPSidebarItem.level-1:has(> .items) > .item {
@@ -1249,6 +1345,7 @@ body {
 
 .dark .VPSidebarItem.is-active > .item .text {
   color: #dbeafe;
+  font-weight: inherit;
 }
 
 .dark .VPDocAsideOutline .content {

@@ -1,4 +1,4 @@
-# 优化器
+# Optimizers
 
 这里整理优化器相关 notebook。网页目录保留主题索引，具体实验仍在仓库根目录的 `optimizer/` 下维护。
 

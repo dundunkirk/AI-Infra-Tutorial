@@ -76,7 +76,7 @@
         <strong>Optimizers</strong>
         <em>Schedulers, AdaGrad, RMSProp, Adam, AdamW, and PyTorch optimization</em>
       </a>
-      <a class="lab-card" href="/llm-lab/roadmap/study_plan">
+      <a class="lab-card" href="/llm-lab/roadmap/studyplan">
         <span>roadmap/</span>
         <strong>Roadmap</strong>
         <em>Study plans, resources, learning strategy, and execution checkpoints</em>

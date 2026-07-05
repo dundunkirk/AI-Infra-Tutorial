@@ -41,11 +41,11 @@ const preferredOrder = [
   'math/prob_stats/kl-div-basics.md',
   'math/prob_stats/pytorch-kl-div-examples.md',
   'roadmap/roadmap.md',
-  'roadmap/study_plan.md',
-  'roadmap/llm_link.md',
-  'roadmap/modern_ai_for_beginners.md',
-  'roadmap/how_to_learn_llm.md',
-  'roadmap/how_to_learn_rl.md',
+  'roadmap/studyplan.md',
+  'roadmap/suggestions/llm_link.md',
+  'roadmap/suggestions/modern_ai_for_beginners.md',
+  'roadmap/suggestions/how_to_learn_llm.md',
+  'roadmap/suggestions/how_to_learn_rl.md',
   'optimizer/index.md',
   'optimizer/lr-scheduler.md',
   'optimizer/adagrad-rmsprop.md',
@@ -120,6 +120,14 @@ function titleFromMarkdown(content, fallback) {
   return match?.[1]?.trim() || fallback
 }
 
+function escapeVueAttribute(value) {
+  return value
+    .replace(/&/g, '&amp;')
+    .replace(/"/g, '&quot;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+}
+
 async function walk(dir) {
   const entries = await readdir(dir, { withFileTypes: true })
   const files = []
@@ -169,12 +177,12 @@ function notebookWrapperPath(ipynbRelativePath) {
   return toPosix(path.join(parsed.dir, generatedNotebookDir, parsed.base))
 }
 
-async function ensureNotebookPage(ipynbRelativePath) {
+async function ensureNotebookPage(ipynbRelativePath, title) {
   const parsed = path.parse(ipynbRelativePath)
   const slugName = slugify(parsed.base)
   let pageRelativePath = notebookWrapperPath(ipynbRelativePath)
   let pageFullPath = path.join(root, pageRelativePath)
-  const content = `${generatedNotebookMarker}\n<NotebookViewer path="/${ipynbRelativePath}" />\n`
+  const content = `${generatedNotebookMarker}\n<NotebookViewer path="/${ipynbRelativePath}" title="${escapeVueAttribute(title)}" />\n`
 
   await mkdir(path.dirname(pageFullPath), { recursive: true })
 
@@ -316,12 +324,13 @@ async function main() {
 
       if (relativePath.endsWith('.ipynb')) {
         notebookPaths.push(relativePath)
-        const pagePath = await ensureNotebookPage(relativePath)
+        const title = notebookTitleOverrides[relativePath] || titleFromSlug(path.basename(relativePath))
+        const pagePath = await ensureNotebookPage(relativePath, title)
         expectedNotebookPages.add(pagePath)
         addPage(
           tree,
           notebookPlacementPath(relativePath),
-          notebookTitleOverrides[relativePath] || titleFromSlug(path.basename(relativePath)),
+          title,
           pagePath,
         )
         continue

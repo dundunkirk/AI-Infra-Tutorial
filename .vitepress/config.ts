@@ -9,6 +9,9 @@ export default defineConfig({
   lang: 'zh-CN',
   srcExclude: ['README.md', 'AGENTS.md'],
   lastUpdated: true,
+  head: [
+    ['link', { rel: 'icon', type: 'image/svg+xml', href: '/llm-lab/favicon.svg' }],
+  ],
 
   markdown: {
     config: (md) => {

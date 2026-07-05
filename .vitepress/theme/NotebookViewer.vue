@@ -9,6 +9,10 @@ const props = defineProps({
     type: String,
     required: true,
   },
+  title: {
+    type: String,
+    default: '',
+  },
 })
 
 const md = new MarkdownIt({
@@ -26,6 +30,8 @@ const normalizedPath = computed(() => {
 })
 
 const title = computed(() => {
+  if (props.title) return props.title
+
   const metadataTitle = notebook.value?.metadata?.title
   if (metadataTitle) return metadataTitle
 
@@ -33,11 +39,13 @@ const title = computed(() => {
   return fileName
     .replace(/\.ipynb$/i, '')
     .replace(/[_-]+/g, ' ')
+    .replace(/^\d+\s+/, '')
     .replace(/\b\w/g, (letter) => letter.toUpperCase())
     .replace(/\bKl\b/g, 'KL')
     .replace(/\bMle\b/g, 'MLE')
     .replace(/\bLr\b/g, 'LR')
     .replace(/\bLp\b/g, 'Lp')
+    .replace(/\bPytorch\b/g, 'PyTorch')
     .replace(/\bAdamw\b/g, 'AdamW')
 })
 

@@ -78,28 +78,34 @@ export const generatedSidebar = [
     collapsed: false,
     items: [
       {
-        text: "LLM 学习路线图",
+        text: "LLM Roadmap",
         link: "/roadmap/roadmap"
       },
       {
-        text: "LLM 具体学习计划（12 周）",
-        link: "/roadmap/study_plan"
+        text: "LLM Study Plan",
+        link: "/roadmap/studyplan"
       },
       {
-        text: "LLM Link",
-        link: "/roadmap/llm_link"
-      },
-      {
-        text: "modern_ai_for_beginners",
-        link: "/roadmap/modern_ai_for_beginners"
-      },
-      {
-        text: "how to learn LLM",
-        link: "/roadmap/how_to_learn_llm"
-      },
-      {
-        text: "how to learn RL",
-        link: "/roadmap/how_to_learn_rl"
+        text: "Suggestions",
+        collapsed: false,
+        items: [
+          {
+            text: "modern_ai_for_beginners",
+            link: "/roadmap/suggestions/modern_ai_for_beginners"
+          },
+          {
+            text: "How to learn LLM",
+            link: "/roadmap/suggestions/how_to_learn_llm"
+          },
+          {
+            text: "How to learn RL",
+            link: "/roadmap/suggestions/how_to_learn_rl"
+          },
+          {
+            text: "modern_genai_bilibili",
+            link: "/roadmap/suggestions/modern_genai"
+          }
+        ]
       }
     ]
   },
@@ -108,7 +114,7 @@ export const generatedSidebar = [
     collapsed: false,
     items: [
       {
-        text: "优化器",
+        text: "Optimizers",
         link: "/optimizer/"
       },
       {

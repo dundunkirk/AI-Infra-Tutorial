@@ -1,4 +1,4 @@
-# how to learn LLM
+# How to learn LLM
 
 作者：偷星九月333
 

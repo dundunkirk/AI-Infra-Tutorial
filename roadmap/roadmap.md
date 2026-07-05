@@ -1,127 +1,114 @@
-# LLM 学习路线图
+# LLM Roadmap
 
-> 原理与实践互为表里，不可分割。既要懂代码实现，也要懂数学计算原理。
->
-> 策略：基础只补到够用 → 尽快进入源码 → RL 只学大模型真正常用的那一支
+> 原理和实践要一起推进：懂数学计算原理，也要能落到代码、源码和实验。
 
----
+这份路线只保留当前真正要推进的主线。更细的周计划见：[LLM Study Plan](/roadmap/studyplan)。
 
-## PyTorch 与反向传播
+## 当前策略
 
-- 理解计算图、链式法则、梯度更新
-- 动手：手写最小 autograd（参考 Karpathy micrograd）
-- 参考：[经典神经网络模型拓扑结构（PyTorch）](https://space.bilibili.com/59807853/channel/collectiondetail?sid=446911)
+先快速入门，建立对 LLM 全流程的整体认识，再逐步深入每个模块的原理、源码和实践。
 
-## 最小语言模型直觉
+| 方向 | 当前安排 |
+| --- | --- |
+| 数学 | 速览 [深度学习的数学基础](https://space.bilibili.com/59807853/channel/collectiondetail?sid=462509)，已完成第一轮 |
+| LLM | 先做 [NeetCode Build Your GPT](https://neetcode.io/practice/machine-learning)，再系统学习 [Stanford CS336](https://cs336.stanford.edu/spring2025/index.html) |
+| RL | 先速览王树森深度强化学习，再补强化学习数学基础 |
+| 基础补充 | 按需回看 D2L、Karpathy nanochat / nanoGPT / makemore / micrograd |
 
-- 从 bigram / char-level LM 开始，理解 next-token prediction
-- 理解 negative log likelihood / cross entropy
-- 动手：Karpathy [makemore](https://github.com/karpathy/nn-zero-to-hero) Lecture 2
+Karpathy 系列优先级暂时放低，作为补基础和补直觉的材料，不作为当前主线。
 
-## 数学基础（按需补）
+## 当前学习清单
 
-- 多元微积分（Jacobian、链式法则）
-- 矩阵分析（矩阵乘法、SVD）
-- 概率统计（先验、似然、后验）
-- 参考：[深度学习的数学基础](https://space.bilibili.com/59807853/channel/collectiondetail?sid=462509)
+| 学习内容 | 视频时长 | 预计时长 | 状态 |
+| --- | --- | --- | --- |
+| micrograd - Karpathy | 2h | 4h | 待完成 |
+| 深度学习的数学基础 - 五道口纳什 | 8h | 16h | 学习中 |
+| makemore - Karpathy | 7h | 14h | 待完成 |
+| 强化学习的数学原理 | 11h | 22h | 待完成 |
 
----
+## 主线顺序
 
-## Transformer 架构
+| 阶段 | 要掌握的内容 |
+| --- | --- |
+| Backprop / PyTorch | 计算图、链式法则、梯度下降、最小 autograd |
+| Mini Language Model | bigram、char-level LM、next-token prediction、cross entropy |
+| Transformer / Tokenizer | self-attention、BPE、nanoGPT、Transformer block |
+| LLM Data Flow | `input_ids`、`labels`、label shift、pretraining vs SFT |
+| Qwen2 Source | embedding、attention、hidden states、logits、loss、RoPE、GQA、RMSNorm、KV cache |
+| SFT / LoRA | chat template、padding、label mask、PEFT、LLaMA-Factory |
+| Infra | profiling、参数量、显存、KV cache、并行、prefill / decode |
+| RL for LLM | reward model、policy gradient、PPO、GRPO、REINFORCE、veRL |
+| Applications | RAG、Agent、Text2SQL |
 
-- 直接读论文：*Attention Is All You Need*（遇到不懂问大模型）
-- 理解 self-attention、residual、MLP、layer norm
-- 理解 BPE tokenizer：encode / decode 流程
-- 动手：Karpathy Lecture 7–8（nanoGPT + BPE tokenizer）
-- 课程：[Stanford CS336](https://cs336.stanford.edu/spring2025/index.html) tokenization / architectures 部分
+## 路线参考
 
-## 语言模型核心概念
+| 资料 | 用法 |
+| --- | --- |
+| [modern_ai_for_beginners](https://github.com/chunhuizhang/modern_ai_for_beginners) | 中文 AI/LLM 学习路线参考 |
+| [modern_genai_bilibili](https://github.com/wdkns/modern_genai_bilibili) | 现代生成式 AI 路线和资料补充 |
+| [偷星九月333 - 大模型路线](https://www.bilibili.com/opus/1184813741324107780?spm_id_from=333.1387.0.0) | 大模型学习路线参考 |
+| [偷星九月333 - RL 路线](https://www.bilibili.com/opus/1186646296518197257?spm_id_from=333.1387.0.0) | RL 学习路线参考 |
+| [Karpathy nn-zero-to-hero](https://github.com/karpathy/nn-zero-to-hero) | micrograd、makemore、nanoGPT 主线 |
+| [AI Engineering from Scratch](https://github.com/rohitg00/ai-engineering-from-scratch) | 全局知识地图参考 |
 
-| 概念 | 要点 |
-|------|------|
-| GPT 训练方式 | NTP（下一个 token 预测），单向，本质是分类任务 |
-| BERT 训练方式 | Mask 机制，双向编码，Encoder-only |
-| 训练本质 | 类别数 = 词表大小，label = input_ids shift 一位 |
-| 预训练 vs SFT | 数据形式不同：连续文本 vs QA 对 + chat_template |
-| 分词方式 | BPE（字节对编码）为主流 |
+## 推荐资料
 
-## 大模型架构源码
+### 数学基础
 
-- 锚点：HuggingFace transformers 中的 [Qwen2](https://github.com/huggingface/transformers/tree/main/src/transformers/models/qwen2)
-- 追踪主干：输入 → embedding → attention → hidden states → logits → loss
-- 重点机制：RoPE、GQA、RMSNorm、KV Cache
+| 资料 | 用法 |
+| --- | --- |
+| [深度学习的数学基础](https://space.bilibili.com/59807853/channel/collectiondetail?sid=462509) | 补微积分、线性代数、概率统计 |
+| [动手学深度学习](https://zh.d2l.ai/index.html) | 补 PyTorch、神经网络和训练基础 |
 
----
+### LLM 主线
 
-## SFT（有监督微调）
+| 资料 | 用法 |
+| --- | --- |
+| [Karpathy nn-zero-to-hero](https://github.com/karpathy/nn-zero-to-hero) | 从 micrograd、makemore 到 nanoGPT |
+| [Andrej Karpathy YouTube](https://www.youtube.com/@AndrejKarpathy) | 建立反向传播、语言模型和 Transformer 直觉 |
+| [Stanford CS336](https://cs336.stanford.edu/spring2025/index.html) | LLM from scratch、tokenization、architecture、systems、alignment |
+| [learnllm.ai](https://learnllm.ai/) | 查漏补缺和路线对照 |
 
-- 动手用 `transformers` + `peft` 手写 LoRA 微调流程：
-  - 数据处理：encode、padding、truncate、apply_chat_template
-  - label mask：只对 response 部分计算 loss
-  - 损失计算：交叉熵
-- 工程框架：[LLaMA-Factory](https://github.com/hiyouga/LLaMA-Factory)、[Swift](https://github.com/modelscope/swift)
-- 模型下载：[ModelScope](https://modelscope.cn)（国内免梯子）/ [hf-mirror](https://hf-mirror.com)
-- 参考：CS336 A5 SFT 视角
+### Transformer 与源码
 
-## 系统视角（Infra）
+| 资料 | 用法 |
+| --- | --- |
+| [Natural Language Processing with Transformers](https://www.oreilly.com/library/view/natural-language-processing/9781098103231/) | 理解 HuggingFace 和 Transformers 工作流 |
+| [HuggingFace Transformers](https://github.com/huggingface/transformers) | 阅读 Qwen2 等 decoder-only LLM 实现 |
 
-- **Profiling**：统计参数量、激活内存、optimizer state、KV cache
-- **并行基础**：data parallel / tensor parallel / pipeline parallel 的区别
-- **推理系统**：prefill vs decode、KV cache 作用、batching / latency / throughput
-- 参考：CS336 A2、modern_ai_for_beginners pytorch distributed
+### SFT / LoRA
 
-## 强化学习（RL）
+| 资料 | 用法 |
+| --- | --- |
+| [PEFT](https://github.com/huggingface/peft) | 理解 LoRA adapter 和参数高效微调 |
+| [LLaMA-Factory](https://github.com/hiyouga/LLaMA-Factory) | 对照完整 SFT / LoRA 工程流程 |
 
-- 先建立 post-training 总图：SFT → preference/reward → policy update
-- 理解 RL 在 LLM 里是"后训练优化"，而非"从零学控制"
-- 主线算法：策略梯度 → PPO（TRPO 的工程实现）→ GRPO → REINFORCE
-- 不展开传统 value-based / model-based RL
-- 推荐框架：[veRL](https://github.com/volcengine/verl)，重点看 `core_algos.py`
-- 数学深究（选修）：[赵世钰《强化学习的数学原理》](https://github.com/MathFoundationRL/Book-Mathematical-Foundation-of-Reinforcement-Learning)
-- 视频：[李宏毅 DRL](https://www.youtube.com/watch?v=z95ZYgPgXOY&list=PLJV_el3uVTsODxQFgzMzPLa16h6B8kWM_) / [RL4LLM B站](https://space.bilibili.com/59807853/channel/collectiondetail?sid=4048984)
+### Infra
 
----
+| 资料 | 用法 |
+| --- | --- |
+| [Stanford CS336](https://cs336.stanford.edu/spring2025/index.html) | GPU、profiling、parallelism、inference |
+| modern_ai_for_beginners PyTorch distributed | 理解分布式训练和并行基础 |
 
-## RAG（检索增强生成）
+### RL
 
-- 核心：分块策略 > embedding 模型选择
-- 重点：分块方法、embedding 模型微调、提升召回率的 trick
+| 资料 | 用法 |
+| --- | --- |
+| [OpenAI Spinning Up RL Intro](https://spinningup.openai.com/en/latest/spinningup/rl_intro.html) | 只看 RL 基础概念和 policy gradient 直觉 |
+| [强化学习的数学原理](https://github.com/MathFoundationRL/Book-Mathematical-Foundation-of-Reinforcement-Learning) | 选修，深入理解 RL 数学推导 |
+| [李宏毅 DRL](https://www.youtube.com/watch?v=z95ZYgPgXOY&list=PLJV_el3uVTsODxQFgzMzPLa16h6B8kWM_) | 补强化学习直觉 |
+| [RL4LLM B站](https://space.bilibili.com/59807853/channel/collectiondetail?sid=4048984) | 对齐 LLM 后训练视角 |
+| [veRL](https://github.com/volcengine/verl) | 阅读 `core_algos.py`，理解 PPO / GRPO 实现 |
 
-## Agent
+## 记录入口
 
-- 核心流程：ReAct（推理 + 行动 + 反馈循环）
-- 两个关键问题：上下文如何注入（skills）、历史如何存储（memory）
-- 参考实现：[nanobot](https://github.com/rashadphz/nanobot)
-- 进阶：Agentic RL（小模型 Agent 效果提升）+ veRL 框架
+- 论文阅读记录：[Google Sheet](https://docs.google.com/spreadsheets/d/1fOf2QWTIMEZQ6Ndf0ZkRkzcOMg4mObvDi8Xs6YHLjaM/edit?gid=0#gid=0)
+- 公开笔记站点：[llm-lab](https://zeztzchen.github.io/llm-lab/)
+- 代码练习：[neetcode machine learning](https://neetcode.io/practice/machine-learning)
 
-## Text2SQL
+## 暂时低优先级
 
-- 上下文工程的典型应用，按需学习
-
----
-
-## 参考资源汇总
-
-| 类型 | 资源 |
-|------|------|
-| 动手系列 | [Andrej Karpathy - nn-zero-to-hero](https://github.com/karpathy/nn-zero-to-hero) |
-| 课程 | [Stanford CS336 - Language Modeling from Scratch](https://cs336.stanford.edu/spring2025/index.html) |
-| 书籍 | [动手学深度学习 d2l.ai](https://zh.d2l.ai/index.html) |
-| 书籍 | [Natural Language Processing with Transformers](https://www.oreilly.com/library/view/natural-language-processing/9781098103231/) |
-| 视频 | [Andrej Karpathy YouTube](https://www.youtube.com/@AndrejKarpathy) |
-| 视频 | [李宏毅深度学习 / DRL](https://www.youtube.com/c/HungyiLeeNTU) |
-| B站 | [modern_ai_for_beginners](https://space.bilibili.com/59807853) |
-| 框架 | [HuggingFace Transformers](https://github.com/huggingface/transformers) |
-| 框架 | [veRL](https://github.com/volcengine/verl) |
-| 框架 | [LLaMA-Factory](https://github.com/hiyouga/LLaMA-Factory) |
-| 课程 | [fast.ai](https://course.fast.ai/) |
-
----
-
-## 学习原则
-
-1. **基础够用即可**：不追求面面俱到，缺什么补什么
-2. **尽快进入源码**：概念理解后立刻找到对应代码
-3. **每周一个可运行结果**：哪怕只有几行代码
-4. **善用大模型**：遇到不懂的，让它结合公式 + 代码解释
-5. **坚持**：看不懂先放一放，回过头来往往豁然开朗
+- 五道口纳什 PyTorch 求导系列
+- RAG / Agent / Text2SQL
+- 完整传统 RL 分支
+- 全知识浏览型资料
