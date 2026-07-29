@@ -16,5 +16,8 @@ node_modules/
 # Local reference files
 books/
 
+# Datasets (downloaded data, not tracked)
+dataset/
+
 # AI tools
 .claude
